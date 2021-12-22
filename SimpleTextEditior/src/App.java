@@ -1,18 +1,14 @@
 import java.util.Stack;
 import javafx.application.*;
 import javafx.geometry.Insets;
-// import javafx.event.EventHandler;
 import javafx.scene.*;
 import javafx.stage.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
-// import javafx.scene.input.InputMethodEvent;
 
 public class App extends Application {
-
-    public static int defaultFontsize = 40;
 
     @Override
     public void start(Stage window) {
@@ -63,10 +59,12 @@ public class App extends Application {
         Label no_Col = new Label();
         Label no_Row = new Label();
         Label w_wrap = new Label();
+        Label curr_Size = new Label();
 
-        statusbar.getChildren().addAll(no_letters, no_words, w_wrap, no_Col, no_Row);
+        statusbar.getChildren().addAll(no_letters, no_words, w_wrap, no_Col, no_Row, curr_Size);
         pane.setBottom(statusbar);
-
+        
+        // Code for the functionality of the status bar.
         input_area.textProperty().addListener((change, oldValue, newValue) -> {
             int characters = newValue.length();
             // int col = characters;
@@ -88,37 +86,34 @@ public class App extends Application {
             no_Col.setText("Col: " + col);
             no_Row.setText("Row: " + row);
         });
-
-        // input_area.addEventHandler(InputMethodEvent.ANY, new
-        // EventHandler<InputMethodEvent>() {
-        // @Override
-        // public void handle(InputMethodEvent event) {
-        // int col = event.getCaretPosition();
-        // no_Col.setText("Col: " + col);
-        // }
-        // });
-
+        
+        // Code for 'New' menu item in the File Menu.
+        // Clears the text area and sets the title of the window to 'Untitled-1'.
         filMenuItem1.setOnAction((e) -> {
             input_area.clear();
+            window.setTitle("Untitled-1");
         });
         
+        // Code for the 'Undo' menu item in the Edit menu.
         input_area.textProperty().addListener((change, oldValue, newValue) -> {
             String[] words = newValue.split("\\s|\n");
             Stack<String> undoWords = new Stack<>();
+            undoWords.removeAllElements();
             for (int i = 0; i < words.length; i++) {
                 undoWords.push(words[i]);
             }
+
             ediMenuItem1.setOnAction((e) -> {
-                undoWords.pop();
+                undoWords.remove(undoWords.size() - 1);
                 input_area.clear();
                 for (int i = 0; i < undoWords.size(); i++) {
-                    input_area.setText(undoWords.remove(i));
+                    input_area.appendText(undoWords.elementAt(i) + " ");
                 }
                 input_area.end();
             });
-
         });
 
+        // Code for implementing the 'Word Wrap' option in the Format menu.
         forMenuItem1.setOnAction((e) -> {
             if (input_area.isWrapText()) {
                 input_area.setWrapText(false);
@@ -128,15 +123,14 @@ public class App extends Application {
             }
         });
 
+        // Code for the changing the text area to Dark Mode.
         forMenuItem2.setOnAction((e) -> {
-            // BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK,
-            // CornerRadii.EMPTY, Insets.EMPTY);
-            // Background background = new Background(backgroundFill);
-            // input_area.setBackground(background);
             Region region = (Region) input_area.lookup(".content");
             region.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
         });
 
+        // Code for changing the font size of the text in the text area and displaying
+        // current font size in the statusbar.
         viMenuItem1.setOnAction((e) -> {
             input_area.setFont(Font.font(defaultFontsize + 10));
             defaultFontsize = defaultFontsize + 10;
