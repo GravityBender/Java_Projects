@@ -1,3 +1,4 @@
+import java.util.Stack;
 import javafx.application.*;
 import javafx.geometry.Insets;
 // import javafx.event.EventHandler;
@@ -99,6 +100,23 @@ public class App extends Application {
 
         filMenuItem1.setOnAction((e) -> {
             input_area.clear();
+        });
+        
+        input_area.textProperty().addListener((change, oldValue, newValue) -> {
+            String[] words = newValue.split("\\s|\n");
+            Stack<String> undoWords = new Stack<>();
+            for (int i = 0; i < words.length; i++) {
+                undoWords.push(words[i]);
+            }
+            ediMenuItem1.setOnAction((e) -> {
+                undoWords.pop();
+                input_area.clear();
+                for (int i = 0; i < undoWords.size(); i++) {
+                    input_area.setText(undoWords.remove(i));
+                }
+                input_area.end();
+            });
+
         });
 
         forMenuItem1.setOnAction((e) -> {
