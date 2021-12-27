@@ -19,44 +19,13 @@
     -fx-background-color: #202020;
 }
 
-/* .menu-bar .label{
-    -fx-text-fill: red;
-}
-
-.menu-bar:hover .label{
-    -fx-background-color: red;
-} */
-
-/* .menu{
-    -fx-background-color: #202020;
-} */
-
 .menu .label{
-    /* -fx-background-color: red; */
     -fx-text-fill: white;
 }
 
 .menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing{
     -fx-background-color: darkgray;
 }
-
-/* .menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
-    -fx-background: black ;
-    -fx-opacity: 0.5;
-    -fx-text-fill: white;
-} */
-
-/* .menu .label{
-    -fx-text-fill: white;
-}
-
-.menu:focused{
-    -fx-background-color: red;
-}
-
-.menu:focused .label {
-    -fx-text-fill: green;
-} */
 
 .menu-item .label {
     -fx-text-fill: white;
