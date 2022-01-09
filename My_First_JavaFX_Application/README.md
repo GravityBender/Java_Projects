@@ -11,10 +11,10 @@ Meanwhile, the compiled output files are generated in the `bin` folder.
 
 ## Output Images:
 
-![](/OutputImages/Image1.JPG)
+![](OutputImages/Image1.JPG)
 
 
 #### Zoomed In turtle due to mouse hover
-![Zoomed In turtle due to mouse hover](/OutputImages/Image2.JPG)
+![Zoomed In turtle due to mouse hover](OutputImages/Image2.JPG)
 
 
