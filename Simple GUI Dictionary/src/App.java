@@ -25,20 +25,6 @@ public class App extends Application {
         sView = new SearchView(dictionary);
         aView = new AddView(dictionary);
 
-        // TextField searchField = new TextField();
-
-        // TextArea resultArea = new TextArea();
-        // resultArea.setEditable(false);
-        // resultArea.setMouseTransparent(true);
-        // resultArea.setFocusTraversable(false);
-        // resultArea.setPrefWidth(300.0);
-        // resultArea.setPrefHeight(120.0);
-
-        // AnchorPane.setTopAnchor(searchField, 30.0);
-        // AnchorPane.setLeftAnchor(searchField, 290.0);
-        // AnchorPane.setTopAnchor(resultArea, 100.0);
-        // AnchorPane.setLeftAnchor(resultArea, 220.0);
-
         layout.setLeft(setButtons());
         layout.setCenter(aView.getView());
 
@@ -55,9 +41,16 @@ public class App extends Application {
         vBtn.setPadding(new Insets(10, 10, 10, 10));
 
         Button addWord = new Button("Add Word");
+        
+        Separator sep1 = new Separator();
+        sep1.setOrientation(Orientation.HORIZONTAL);
+        sep1.setMaxWidth(100);
+        sep1.setHalignment(HPos.CENTER);
+        
         Button getDef = new Button("Search Word");
 
         vBtn.getChildren().addAll(addWord, getDef);
+        vBtn.getChildren().add(1, sep1);
 
         addWord.setOnAction((e) -> {
             layout.setCenter(aView.getView());
