@@ -115,8 +115,8 @@ public class App extends Application {
                 File file = fileChooser.showOpenDialog(window);
                 if (file != null) {
                     input_area.setText(openTextFile(file));
-                    ;
                 }
+                window.setTitle(file.getName());
             }
         });
 
@@ -131,6 +131,7 @@ public class App extends Application {
                 if (file != null) {
                     saveTextFile(input_area.getText(), file);
                 }
+                window.setTitle(file.getName());
             }
         });
 
@@ -187,10 +188,10 @@ public class App extends Application {
                 no_Row.getStyleClass().add("common_label");
                 curr_Size.getStyleClass().add("common_label");
 
-                window.setScene(blackScene);
+                window.setScene(blackScene, 600, 400);
             } else {
                 BorderPane whitepane = new BorderPane(pane);
-                Scene normal = new Scene(whitepane);
+                Scene normal = new Scene(whitepane, 600, 400);
                 window.setScene(normal);
             }
         });
@@ -210,7 +211,7 @@ public class App extends Application {
             curr_Size.setText("Curr. Size: " + size);
         });
 
-        Scene scene = new Scene(pane);
+        Scene scene = new Scene(pane, 600, 400);
 
         window.setTitle("Text Editior");
         window.setScene(scene);
