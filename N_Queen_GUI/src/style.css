@@ -1,0 +1,11 @@
+.white-btn{
+    -fx-background-color: white;
+    -fx-text-fill: black;
+    
+}
+
+.black-btn{
+    -fx-background-color: black;
+    -fx-text-fill: white;
+    
+}
