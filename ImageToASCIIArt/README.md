@@ -1,18 +1,28 @@
-## Getting Started
+# Image to ASCII Convertor
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is a console based program that takes the absolute path of the image and converts it into ASCII format. The text file is saved in the directory in which the program is ran.
+
+## Features:
+- Can convert JPEG and PNG images into ASCII text file.
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+The workspace contains two folders, where:
 
 - `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `bin`: to store the class files
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Requirements
+In order to run this application you must have the latest version of Java installed(JDK11 at least).
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Sample Images
+![](Img1.PNG)
 
-## Dependency Management
+![](Img2.PNG)
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+![](Img3.PNG)
+
+Best font to view in: `Consolas`
+
+Made by Garvit Verma (2022).
+
