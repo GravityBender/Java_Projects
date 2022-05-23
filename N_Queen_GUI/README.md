@@ -1,18 +1,36 @@
-## Getting Started
+# n-Queens GUI
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+This is a visual representation of the n-Queens problem.
+
+### Algorithm Used
+Backtracking
+
+## Features:
+- Size of chessboard can be specified
+- Alerts if the solution is not possible
 
 ## Folder Structure
 
-The workspace contains two folders by default, where:
+The workspace contains two folders, where:
 
 - `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+- `bin`: to store the class files
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Requirements
+In order to run this application you must have the latest version of Java installed(JDK11 at least) and JavaFX jar files imported.
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+## Demo
+- #### Starting Screen
+![](StartingScreen.JPG)
 
-## Dependency Management
+- #### Chess Board produced after clicking on `Enter` button
+![](Board.JPG)
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+- #### Solution generated after clicking on `Click to Start` button
+![](Solution.JPG)
+
+- #### Alert produced in case solution is not present
+![](Alert.JPG)
+
+Made by Garvit Verma (2022).
+
