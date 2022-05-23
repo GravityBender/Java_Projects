@@ -26,5 +26,11 @@ In order to run this application you must have the latest version of Java instal
 ## Demo
 ![](Demo.gif)
 
+- #### Warning produced in case graph can not be colored
+![](Warning.JPG)
+
+- #### Error produced in case number of colors not specified
+![](Error.JPG)
+
 Made by Garvit Verma (2022).
 
