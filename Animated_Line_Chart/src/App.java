@@ -1,139 +1,109 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-/**
- * App
- */
 public class App extends Application {
 
-    private int i = -1;
+    private BorderPane root;
+    private FirstScreen firstScreen;
+    private FileDetails fDetails1;
 
-    @Override
-    public void start(Stage window) throws FileNotFoundException {
-
-        window.setScene(new Scene(createContent()));
-        window.setTitle("Graph");
-        window.show();
+    public App() {
+        root = new BorderPane();
+        firstScreen = new FirstScreen();
+        fDetails1 = new FileDetails();
     }
 
-    private LineChart<Number, Number> createLineChart() {
+    @Override
+    public void start(Stage window) {
 
+        root.setCenter(firstScreen.setFirstScreen());
+
+        firstScreenEvents();
+
+        window.setScene(new Scene(root, 300, 400));
+        window.setTitle("Application");
+        window.show();
+
+    }
+
+    private void firstScreenEvents() {
+
+        if (firstScreen.getGetAddress().getText().toString() != null) {
+
+            firstScreen.getGuardButton().setOnAction((e) -> {
+
+                fDetails1.setPath(firstScreen.getGetAddress().getText().toString());
+                if (!fDetails1.checkIfPresent()) {
+                    Alert alert = new Alert(AlertType.ERROR, "No file present!",
+                            ButtonType.CLOSE, ButtonType.OK);
+                    alert.show();
+                } else {
+                    secondScreenEvents();
+                }
+
+            });
+
+        }
+    }
+
+    private void secondScreenEvents() {
+
+        BorderPane tempBorderPane = new BorderPane();
+
+        Charts chartEvents = new Charts();
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Time");
-        yAxis.setLabel("Value");
+        yAxis.setLabel("Frequency");
 
         LineChart<Number, Number> tempLineChart = new LineChart<>(xAxis, yAxis);
-        tempLineChart.setTitle("Signal Graph");
+        tempLineChart.setTitle("Sine Graph");
         tempLineChart.setCreateSymbols(false);
 
-        return tempLineChart;
-    }
+        chartEvents.setMainLineChart(tempLineChart);
+        chartEvents.setfDetails(fDetails1);
 
-    private Parent createContent() throws FileNotFoundException {
+        root.setCenter(chartEvents.getMainLineChart());
 
-        BorderPane root = new BorderPane();
+        chartEvents.animateChart();
 
-        LineChart<Number, Number> mainLineChart = createLineChart();
+        HBox tempHBox = new HBox();
+        Button startAgainButton = new Button("Start Again");
+        Button stopButton = new Button("Stop");
 
-        XYChart.Series<Number, Number> dataSeries = new XYChart.Series<>();
-        List<Double> signal = signalReader();
-
-        EventHandler<ActionEvent> updateChart = new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                dataSeries.getData().add(new XYChart.Data<>(getValue(), signal.get(getValue())));
-
-                // remove the first point, because that's the left-most.
-                // if (getValue() > 100) {
-                // dataSeries.getData().remove(0);
-                // }
-            }
-        };
-
-        mainLineChart.getData().add(dataSeries);
-        mainLineChart.setAnimated(false);
-
-        // Timeline chartUpdater = new Timeline(new KeyFrame(Duration.millis(50),
-        // updateChart));
-        // chartUpdater.setCycleCount(Timeline.INDEFINITE);
-        // chartUpdater.play();
-
-        Timeline chartUpdater = new Timeline();
-        KeyFrame kf = new KeyFrame(Duration.millis(100), event -> {
-
-            if (getValue() >= signal.size()) {
-                chartUpdater.stop();
-            } else {
-                dataSeries.getData().add(new XYChart.Data<>(getValue(), signal.get(getValue())));
-            }
+        startAgainButton.setOnAction((e) -> {
+            root.setCenter(firstScreen.setFirstScreen());
+            firstScreenEvents();
         });
-        chartUpdater.getKeyFrames().addAll(kf);
-        chartUpdater.setCycleCount(Timeline.INDEFINITE);
-        chartUpdater.play();
 
-        root.setCenter(mainLineChart);
-        return root;
+        stopButton.setOnAction((e) -> {
+            root.setCenter(firstScreen.setFirstScreen());
+            firstScreenEvents();
+        });
+
+        tempHBox.getChildren().addAll(startAgainButton, stopButton);
+        tempHBox.setAlignment(Pos.CENTER);
+        root.setBottom(tempHBox);
     }
 
-    private int getValue() {
-        i++;
-        return i;
-    }
-
-    private List<Double> signalReader() throws FileNotFoundException {
-        List<Double> signal = new ArrayList<>();
-        Scanner scanner = new Scanner(new File("resources/input.txt"));
-        int i = 0;
-        while (scanner.hasNext()) {
-            // double data = Double.parseDouble(scanner.next());
-            signal.add(Double.parseDouble(scanner.next()));
-            i++;
-        }
-
-        return signal;
-
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-
-        // Make the main thread sleep for 5 seconds to wait for Arduino connection to be
-        // successful.
-        // Thread.sleep(5000);
-
-        File checkFile = new File("resources/input.txt");
-
-        // Infinite loop that checks for the creation of the text file sent by arduino
-        do {
-            // Wait till creation of file.
-        } while (!checkFile.exists());
-
+    public static void main(String[] args) {
         launch(args);
-
     }
 }
