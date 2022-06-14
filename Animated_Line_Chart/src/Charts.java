@@ -37,15 +37,38 @@ public class Charts {
 
         this.mainLineChart.getData().add(this.mainDataSeries);
 
-        Timeline chartUpdater = new Timeline();
-        KeyFrame kf = new KeyFrame(Duration.millis(10), event -> {
+//         Timeline chartUpdater = new Timeline();
+//         KeyFrame kf = new KeyFrame(Duration.millis(10), event -> {
 
-            if (getValue() >= fDetails.fileReader().size()) {
+//             if (getValue() >= fDetails.fileReader().size()) {
+//                 chartUpdater.stop();
+//             } else {
+//                 mainDataSeries.getData().add(new XYChart.Data<>(getValue(), fDetails.fileReader().get(getValue())));
+//             }
+//         });
+//         chartUpdater.getKeyFrames().addAll(kf);
+//         chartUpdater.setCycleCount(Timeline.INDEFINITE);
+//         chartUpdater.play();
+        
+        Timeline chartUpdater = new Timeline();
+
+        KeyFrame kf = new KeyFrame(Duration.millis(80), event -> {
+
+            if (geti() >= fDetails.fileReader().size() - 1) {
                 chartUpdater.stop();
             } else {
-                mainDataSeries.getData().add(new XYChart.Data<>(getValue(), fDetails.fileReader().get(getValue())));
+                seti();
+                mainDataSeries.getData().add(new XYChart.Data<>(geti(), fDetails.fileReader().get(geti())));
+                if (geti() > 1000) {
+                    mainDataSeries.getData().remove(0);
+                }
+                // System.out.println(xAxis.getLowerBound());
+                xAxis.setLowerBound(i - 1000);
+                xAxis.setUpperBound(i + 1);
             }
         });
+
+        mainLineChart.setAnimated(false);
         chartUpdater.getKeyFrames().addAll(kf);
         chartUpdater.setCycleCount(Timeline.INDEFINITE);
         chartUpdater.play();
