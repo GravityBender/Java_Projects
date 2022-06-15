@@ -65,13 +65,16 @@ public class App extends Application {
 
     private void secondScreenEvents() {
 
-        BorderPane tempBorderPane = new BorderPane();
-
         Charts chartEvents = new Charts();
         NumberAxis xAxis = new NumberAxis();
         NumberAxis yAxis = new NumberAxis();
         xAxis.setLabel("Time");
+        xAxis.setLowerBound(0);
+        xAxis.setForceZeroInRange(false);
+        xAxis.setAutoRanging(false);
         yAxis.setLabel("Frequency");
+        chartEvents.setxAxis(xAxis);
+        chartEvents.setyAxis(yAxis);
 
         LineChart<Number, Number> tempLineChart = new LineChart<>(xAxis, yAxis);
         tempLineChart.setTitle("Sine Graph");
