@@ -11,9 +11,13 @@ public class Charts {
     private XYChart.Series<Number, Number> mainDataSeries;
     private FileDetails fDetails;
     private int i;
+    private NumberAxis xAxis;
+    private NumberAxis yAxis;
 
     public Charts() {
         mainDataSeries = new XYChart.Series<>();
+        xAxis = new NumberAxis();
+        yAxis = new NumberAxis();
         i = -1;
     }
 
@@ -32,6 +36,22 @@ public class Charts {
     public void setfDetails(FileDetails fDetails) {
         this.fDetails = fDetails;
     }
+    
+    public NumberAxis getxAxis() {
+        return xAxis;
+    }
+
+    public void setxAxis(NumberAxis xAxis) {
+        this.xAxis = xAxis;
+    }
+
+    public NumberAxis getyAxis() {
+        return yAxis;
+    }
+
+    public void setyAxis(NumberAxis yAxis) {
+        this.yAxis = yAxis;
+    
 
     public void animateChart() {
 
@@ -74,8 +94,11 @@ public class Charts {
         chartUpdater.play();
     }
 
-    private int getValue() {
+    private void seti() {
         i++;
+    }
+
+    private int geti() {
         return i;
     }
 
