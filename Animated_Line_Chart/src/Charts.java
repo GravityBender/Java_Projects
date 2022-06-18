@@ -51,7 +51,7 @@ public class Charts {
 
     public void setyAxis(NumberAxis yAxis) {
         this.yAxis = yAxis;
-    
+    }
 
     public void animateChart() {
 
