@@ -4,6 +4,7 @@ package org.example;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Comment;
 import org.jsoup.select.Elements;
 
 public class App
@@ -53,10 +54,31 @@ public class App
                 System.out.print(row.select("td:nth-of-type(7)").text() + " ");
                 System.out.println(row.select("td:nth-of-type(8)").text());
             }
-
+            
+            List<Comment> commentList = getComments(doc);
             
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    private static List<Comment> getComments(Node node) {
+		List<Comment> commentList = new ArrayList<Comment>();
+	    
+		int i = 0;
+	    
+	    while (i < node.childNodes().size()) {
+	    	
+	        Node child = node.childNode(i);
+	        if (child.nodeName().equals("#comment")) {
+	        	commentList.add((Comment) child);
+	        	
+	        } else {
+	        	commentList.addAll(getComments(child));
+	        }
+	        
+	        i++;
+	    }
+	    return commentList;
+	}
 }
