@@ -1,0 +1,15 @@
+//  You cannot use the general FileReader to read the files while your spring application is deployed on the cloud or on some other server
+//  Add the files that are to be read in the resources folder of your application then add the following code snippet.
+
+{
+  Resource resource1 = new ClassPathResource("couchbase.json");
+  InputStream in1 = null;
+  try {
+      in1 = resource1.getInputStream();
+  } catch (FileNotFoundException | IOException e) {
+      throw new RuntimeException(e);
+  }
+
+  JsonReader reader1 = new JsonReader(new BufferedReader(new InputStreamReader(in1)));
+  List<Map<String, String>> list1 = gson.fromJson(reader1, List.class);
+}
